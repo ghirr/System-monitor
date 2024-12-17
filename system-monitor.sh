@@ -2,6 +2,8 @@
 
 HELP_FILE="help.txt"
 LOG_FILE="/var/log/surveillance.log"
+VERSION="Systhem monitor v1"
+AUTHORS="crée par trinome : Yasser & Islem & Zaineb"
 
 # Fonction pour afficher l'utilisation
 show_usage() {
@@ -56,13 +58,18 @@ graphical_menu() {
     esac
 }
 
+# Fonction pour afficher la version et les auteurs
+show_version() {
+    echo "$VERSION"
+    echo "$AUTHORS"
+}
 
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hmcpig" opt; do
+while getopts "hmcpigv" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
@@ -70,6 +77,7 @@ while getopts "hmcpig" opt; do
         p) monitor_processes ;;
         i) list_logs ;;
         g) graphical_menu ;;
+        v) show_version ;;
     esac
 done
 
