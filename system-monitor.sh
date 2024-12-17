@@ -64,12 +64,59 @@ show_version() {
     echo "$AUTHORS"
 }
 
+# Menu textuel avec select
+menu_textuel() {
+PS3="Votre choix : "  
+
+select option in "HELP" "Monitor Memory" "Monitor IO" "Monitor Processes" "List Logs" "Show Version" "Graphical Menu" "Quitter"
+do
+    case $REPLY in
+        1)  # Option 1 : HELP
+            echo "Affichage de l'aide..."
+            HELP   # Appel à la fonction HELP
+            ;;
+        2)  # Option 2 : Monitor Memory
+            echo "Surveillance de la mémoire..."
+            monitor_memory  # Appel à la fonction correspondante
+            ;;
+        3)  # Option 3 : Monitor IO
+            echo "Surveillance des E/S..."
+            monitor_io
+            ;;
+        4)  # Option 4 : Monitor Processes
+            echo "Surveillance des processus..."
+            monitor_processes
+            ;;
+        5)  # Option 5 : List Logs
+            echo "Affichage des logs..."
+            list_logs
+            ;;
+        6)  # Option 6 : Show Version
+            echo "Affichage de la version..."
+            show_version
+            ;;
+        7)  # Option 7 : Graphical Menu
+            echo "Ouverture du menu graphique..."
+            graphical_menu
+            ;;
+        8)  # Option 8 : Quitter
+            echo "Fin du script. Au revoir !"
+            exit 0
+            ;;
+        *)  # Choix incorrect
+            echo "Choix incorrect. Veuillez réessayer."
+            ;;
+    esac
+done
+
+} 
+
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hmcpigv" opt; do
+while getopts "hmcpigvt" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
@@ -78,6 +125,7 @@ while getopts "hmcpigv" opt; do
         i) list_logs ;;
         g) graphical_menu ;;
         v) show_version ;;
+        t) menu_textuel ;;
     esac
 done
 
