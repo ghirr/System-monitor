@@ -45,15 +45,21 @@ list_logs() {
 
 #Menu graphique avec YAD
 graphical_menu() {
-    yad --width=400 --height=300 --title="System Monitor" --button="Surveiller la mémoire":1 \
-        --button="Surveiller les E/S":2 --button="Lister les processus":3 --button="Voir les logs":4 \
-        --button="Aide":5 --button="Quitter":0
+    yad --form --center --border=10 --window-icon="~/System-monitor/icons/icon.png" --title="System Monitor" \
+    	--button="Mémoire!$HOME/System-monitor/icons/ram.png":1  \
+    	--button="E/S IO!$HOME/System-monitor/icons/io.png":2  \
+    	--button="Processus!$HOME/System-monitor/icons/processor.png":3 \
+    	--button="Logs!$HOME/System-monitor/icons/log.png":4 \
+    	--button="Aide!$HOME/System-monitor/icons/help.png":5 \
+    	--button="Github!$HOME/System-monitor/icons/github.png":6 \
+    	--button="exit!$HOME/System-monitor/icons/exit.png":0 
     case $? in
         1) monitor_memory ;;
         2) monitor_io ;;
         3) monitor_processes ;;
         4) list_logs ;;
         5) HELP ;;
+        6) yad --html --browser --uri=https://github.com/ghirr/System-monitor --width=650 --height=480 ;;
         0) exit 0 ;;
     esac
 }
@@ -64,7 +70,7 @@ show_version() {
     echo "$AUTHORS"
 }
 
-# Menu textuel avec select
+# Menu textuel
 menu_textuel() {
 PS3="Votre choix : "  
 
@@ -104,7 +110,7 @@ do
             exit 0
             ;;
         *)  # Choix incorrect
-            echo "Choix incorrect. Veuillez réessayer."
+            show_usage
             ;;
     esac
 done
