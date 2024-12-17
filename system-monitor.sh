@@ -28,17 +28,26 @@ monitor_io() {
     iostat -x 5 3
 }
 
+# Fonction pour lister les processus en cours
+monitor_processes() {
+    echo "$(date): Surveillance des processus" >> "$LOG_FILE"
+    ps -eo user,pid,ppid,%mem,%cpu,comm --sort=-%mem,-%cpu >> "$LOG_FILE"
+    ps -eo user,pid,ppid,%mem,%cpu,comm --sort=-%mem,-%cpu
+    echo "Nombre total de processus actifs : $(ps -e | wc -l)"
+}
+
 
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hmc" opt; do
+while getopts "hmcp" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
         c) monitor_io ;;
+        p) monitor_processes ;;
     esac
 done
 
