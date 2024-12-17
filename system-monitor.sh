@@ -41,19 +41,35 @@ list_logs() {
         tac "$LOG_FILE" | less
 }
 
+#Menu graphique avec YAD
+graphical_menu() {
+    yad --width=400 --height=300 --title="System Monitor" --button="Surveiller la mémoire":1 \
+        --button="Surveiller les E/S":2 --button="Lister les processus":3 --button="Voir les logs":4 \
+        --button="Aide":5 --button="Quitter":0
+    case $? in
+        1) monitor_memory ;;
+        2) monitor_io ;;
+        3) monitor_processes ;;
+        4) list_logs ;;
+        5) HELP ;;
+        0) exit 0 ;;
+    esac
+}
+
 
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hmcpi" opt; do
+while getopts "hmcpig" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
         c) monitor_io ;;
         p) monitor_processes ;;
         i) list_logs ;;
+        g) graphical_menu ;;
     esac
 done
 
