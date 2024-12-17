@@ -36,18 +36,24 @@ monitor_processes() {
     echo "Nombre total de processus actifs : $(ps -e | wc -l)"
 }
 
+# Fonction pour afficher les messages du fichier de trace
+list_logs() {
+        tac "$LOG_FILE" | less
+}
+
 
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hmcp" opt; do
+while getopts "hmcpi" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
         c) monitor_io ;;
         p) monitor_processes ;;
+        i) list_logs ;;
     esac
 done
 
