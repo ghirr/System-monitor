@@ -13,6 +13,7 @@ HELP() {
     cat "$HELP_FILE"
 }
 
+
 # Fonction pour la surveillance de la mémoire et du swap
 monitor_memory() {
     echo "$(date): Surveillance de la mémoire" >> "$LOG_FILE"
@@ -20,14 +21,24 @@ monitor_memory() {
     free -h
 }
 
+# Fonction pour la surveillance des Entrées et Sorties des périphériques
+monitor_io() {
+    echo "$(date): Surveillance des E/S" >> "$LOG_FILE"
+    iostat -x 5 3 >> "$LOG_FILE"
+    iostat -x 5 3
+}
+
+
 if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
 fi
 
-while getopts "hm" opt; do
+while getopts "hmc" opt; do
     case $opt in
         h) HELP ;;
         m) monitor_memory ;;
+        c) monitor_io ;;
     esac
 done
+
