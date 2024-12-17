@@ -1,0 +1,26 @@
+Notre application est un system-monitor qui effectue un mécanisme de surveillance
+de plusieurs éléments :
+1. l’activité CPU du système d’exploitation ;
+2. l’utilisation de la mémoire du système d’exploitation ;
+3. le contrôle de processus, par le nombre de processus actifs.
+Options HELP :
+• -m : appelle une fonction qui affiche les quantités totales de mémoire et de zone de
+swap libres et utilisées (pour ceci vous utilisez la commande free : voir rappel) et stocke
+le résultat dans un fichier de trace /var/log/surveillance.log an ajoutant la date et l’heure
+de l’affichage.
+• -c : appelle une fonction pour surveiller la charge d'entrée/sortie des périphérique du
+système depuis le dernier démarrage avec 3 intervalles de 5 secondes (pour ceci vous
+utilisez la commande iostat : voir rappel). Cette fonction stocke le résultat dans un fichier
+de trace /var/log/surveillance.log an ajoutant la date et l’heure de l’affichage.
+• -p : appelle une fonction qui affiche une liste des processus en cours d'exécution
+formatée avec les colonnes (USER,PID ,PPID,numéro du processus, %mémoire ,
+%cpu,COMMAND) triés par ordre décroissant selon l’occupation mémoire et cpu , avec le nombre total des processus actifs (utilisation de la commande ps) . Le résultat sera
+stocké dans un fichier de trace /var/log/surveillance.log an ajoutant la date et l’heure de
+l’affichage.
+• -l : appelle une fonction pour lister les messages de surveillance à partie du fichier de
+trace /var/log/surveillance (affichage inversé page par page).
+• -h: Pour afficher le help détaillé à partir d’un fichier texte
+• -g: Pour afficher un menu textuel et gérer les fonctionnalité de façon
+graphique(Utilisation de YAD).
+• -v: Pour afficher le nom des auteurs et version du code.
+• -m: Pour afficher un menu textuel
